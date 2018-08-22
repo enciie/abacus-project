@@ -69,7 +69,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
     end
   end
 
-  delete '/groups/:id/delete' do
+  post '/groups/:id/delete' do
     if logged_in?
       @group = Group.find_by_id(params[:id])
       if @group && @group.user == current_user
