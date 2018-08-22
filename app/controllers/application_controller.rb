@@ -10,7 +10,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    erb :index
+    if logged_in?
+      redirect to '/users/:slug'
+    else
+      erb :index
+    end
   end
 
   get "/signup" do
@@ -36,10 +40,24 @@ class ApplicationController < Sinatra::Base
     @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect to '/groups'
+      redirect to "/users/#{@user.slug}"
     else
       redirect to '/signup'
     end
+  end
+
+  get '/logout' do
+    if logged_in?
+      sessions.clear
+      redirect to '/'
+    else
+      redirect to '/groups'
+    end
+  end
+
+  get '/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'users/homepage'
   end
 
   helpers do
