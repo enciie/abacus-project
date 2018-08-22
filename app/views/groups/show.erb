@@ -1,16 +1,13 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 
 <h1>Group: <%= @group.name %> </h1>
-<% if flash.has?(:message) %>
-  <%= flash[:message] %>
-<% end %>
 
 <h3>Expenses:</h3>
   <%if @group.expenses.empty?%>
     <p>Currently no expenses for this group</p>
   <%else %>
     <%@group.expenses.each do |expense|%>
-        <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=expense.price %></a></li>
+        <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
     <% end %>
   <% end %>
 

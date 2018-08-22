@@ -39,14 +39,14 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     erb :'/expenses/edit'
   end
 
-  post '/expenses/:id' do
+  patch '/expenses/:id' do
     @expense = Expense.find(params[:id])
     @expense.update(params[:expense])
     @expense.save
     redirect to "/expenses/#{@expense.id}"
   end
 
-  post '/expenses/:id/delete' do
+  delete '/expenses/:id/delete' do
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
       if @expense && @expense.user == current_user

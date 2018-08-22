@@ -1,6 +1,13 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+
+
 <h1>Add New Expenses to <%=current_group.name.upcase%></h1>
 <br></br>
+
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+<br>
 <form action="/expenses" method="post">
   <label>Add New Expense:</label>
   <input type="text" id="new_expense" name="expenses[name]" placeholder="Description">

@@ -4,7 +4,7 @@
   <%= flash[:message] %>
 <% end %>
 
-<h3>Price: $<%=@expense.price.to_f %></h3>
+<h3>Price: $<%=('%.2f' % (@expense.price)) %></h3>
 <br></br>
 <p>Added to <a href="/groups/<%=current_group.id%>"><%=current_group.name%></a></p>
 <a href="/expenses/<%=@expense.id%>/edit">Edit</a>

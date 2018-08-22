@@ -1,5 +1,10 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
-<h1>Edit Group <%=@group.name%></h1>
+
+<h1>Edit Group <%=@group.name%></h1><br></br>
+
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
 
 <form action="/groups/<%= @group.id %>" method="post">
   <input type="hidden" id="hidden" name="_method" value="PATCH">

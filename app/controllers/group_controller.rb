@@ -1,4 +1,5 @@
 require './config/environment'
+require 'sinatra/base'
 require 'rack-flash'
 require 'pry'
 
@@ -60,19 +61,20 @@ class GroupController < ApplicationController #inherits from ApplicationControll
     end
   end
 
-  post '/groups/:id' do #edit action
+  patch '/groups/:id' do #edit action
     if params["group"]["name"] == ""
+      flash[:message] = "Group Name cannot be blank"
       redirect to "/groups/#{params[:id]}/edit"
     else
       @group = Group.find_by_id(params[:id])
       # @group.name = params[:group][:name]
-      @group.update(params[:group])
+      @group.update(params[:group]) unless @group.name == params[:group][:name]
       # @group.save
       redirect to "/groups/#{@group.id}"
     end
   end
 
-  post '/groups/:id/delete' do
+  delete '/groups/:id/delete' do
     if logged_in?
       @group = Group.find_by_id(params[:id])
       if @group && @group.user == current_user
