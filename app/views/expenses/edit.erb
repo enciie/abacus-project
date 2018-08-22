@@ -1,1 +1,21 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+
+<h1>Edit Expense: <%= @expense.name %></h1>
+<br></br>
+
+<h3>Group: <%=current_group.name%></h3><br>
+
+<form action="/expenses/<%= @expense.id%>" method="POST">
+  <input type="hidden" name="_method" value="PATCH">
+
+  <label for="name">Update Expense Name:</label>
+  <input type="text" name="expense[name]" id="expense_name" value="<%= @expense.name %>"><br></br>
+
+  <label for="artist_name">Update Expense Price:</label>
+  <input type="text" name="expense[price]" value="<%= @expense.price%>" pattern="\d+.?\d*" id="expense_price"><br></br>
+
+  <br>
+
+  <input type="submit" id="submit" value="Update">
+
+</form>

@@ -5,7 +5,6 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   get '/expenses/new' do #displays create expense form
     if logged_in?
-      binding.pry
       @user = current_user
       @group = current_group
       erb :'/expenses/new'
@@ -35,14 +34,14 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     erb :'/expenses/edit'
   end
 
-  patch '/expenses/:id' do
+  post '/expenses/:id' do
     @expense = Expense.find(params[:id])
     @expense.update(params[:expense])
     @expense.save
     redirect to "/expenses/#{@expense.id}"
   end
 
-  delete '/expenses/:id/delete' do
+  post '/expenses/:id/delete' do
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
       if @expense && @expense.user == current_user
