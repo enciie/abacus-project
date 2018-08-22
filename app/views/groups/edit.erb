@@ -1,6 +1,6 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 
-<h1>Edit Group <%=@group.name%></h1><br></br>
+<h2>Edit Group <%=@group.name%></h2><br></br>
 
 <% if flash.has?(:message) %>
   <%= flash[:message] %>

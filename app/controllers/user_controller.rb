@@ -16,7 +16,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   post '/signup' do # create a new user
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      flash[:message] = "flash test 1"
+      flash[:message] = "Please make sure all fields are filled in"
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
@@ -25,7 +25,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
         flash[:message] = "success"
         redirect to "/home"
       else
-        # flash[:message] = @user.errors.full_messages.join(", ")
+        flash[:message] = @user.errors.full_messages.join(", ")
         redirect to '/signup'
       end
     end

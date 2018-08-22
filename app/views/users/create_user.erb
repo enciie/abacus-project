@@ -1,11 +1,9 @@
+<h2>Sign Up for Abacus</h2>
+
+<br>
 <% if flash.has?(:message) %>
   <%= flash[:message] %>
 <% end %>
-
-<h1>Sign Up for Abacus</h1>
-
-<br>
-
 <form action="/signup" method="post">
   <label>Username:</label>
   <input type="text" name="username" placeholder="username">

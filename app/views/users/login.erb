@@ -1,4 +1,8 @@
-<h1>Log In to Abacus</h1>
+<h2>Log In to Abacus</h2>
+
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
 
 <form action="/login" method="post">
   <label>Username: </label>
