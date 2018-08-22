@@ -6,24 +6,11 @@ class ApplicationController < Sinatra::Base
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions
-    set :sessions_secret, "abacus-secret"
+    set :session_secret, "abacus-secret"
   end
 
   get '/' do
-    if logged_in?
-      redirect to '/users/:slug'
-    else
-      erb :index
-    end
-  end
-
-  get '/logout' do
-    if logged_in?
-      sessions.clear
-      redirect to '/'
-    else
-      redirect to "/users/#{@user.slug}"
-    end
+    erb :index
   end
 
   helpers do
@@ -33,9 +20,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      if logged_in?
-        @user = User.find(session[:user_id])
-      end
+      @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
     end
 
   end

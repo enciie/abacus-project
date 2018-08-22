@@ -1,8 +1,8 @@
-<p>Logged in as : <%= @user.username %></p>
-<h1>Welcome, <%=@user.username%></h1>
+<p>Logged in as : <%=current_user.username %></p>
+<h1>Welcome, <%=current_user.username%></h1>
 
 <br></br>
-<h4>You currently have <%=@user.groups.count%> group(s)</h4>
+<h4>You currently have <%=current_user.groups.count%> group(s)</h4>
 <br></br>
 <a href="/groups">View or Create Group</a>
 <br></br>
