@@ -23,6 +23,12 @@ class ApplicationController < Sinatra::Base
       @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
     end
 
+    def current_group
+      if logged_in?
+        @group = Group.find(session[:group_id])
+      end
+    end
+
   end
 
 end

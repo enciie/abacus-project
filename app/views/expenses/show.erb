@@ -1,0 +1,16 @@
+<p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+<h2>EXPENSE: <%=@expense.name%></h2>
+
+<h3>Price: $<%=@expense.price.to_f %></h3>
+<br></br>
+<p>Added to <a href="/groups/<%=current_group.id%>"><%=current_group.name%></a></p>
+<a href="/expenses/<%=@expense.id%>/edit">Edit</a>
+<br></br>
+
+<form method="post" action="/expenses/<%=@expense.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Expense">
+</form>
+<br></br>
+
+<a href="/expenses/new">Add New Expense</a>
