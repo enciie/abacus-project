@@ -26,14 +26,13 @@ class GroupController < ApplicationController #inherits from ApplicationControll
 
   post '/groups' do #create group
     if params[:group][:name] == ""
-      flash[:message] = "flash test 1"
+      flash[:message] = "Group Name cannot be blank"
       redirect to '/groups/new'
     else
       user = User.find_by_id(session[:user_id])
       @group = Group.create(:name => params[:group][:name], :user_id => user.id)
       session[:group_id] = @group.id
-      flash[:message] = "Successfully created a new group"
-      binding.pry
+      flash[:message] = "Successfully created a new Group"
       redirect to "/groups/#{@group.id}"
     end
   end
