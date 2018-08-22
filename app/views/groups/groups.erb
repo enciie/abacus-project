@@ -1,5 +1,15 @@
-<p>Logged in as : <%= @user.username %></p>
-<h1>Group</h1>
+<p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+<h1>Group List</h1>
 <br></br>
 
-<h3>Here are you groups (<%=@user.groups.size%>):</h3>
+<h3>Here are your groups (<%=@user.groups.size%>):</h3>
+
+<ul><% @user.groups.each do |group| %>
+<li><a href="/groups/<%=group.id%>"><%= group.name%></a></li>
+<%end%>
+
+</ul>
+<br></br>
+<br></br>
+<p><label><a href="/groups/new">Create a new group</a></label></p>
+<p><label><a href="/logout">Log Out</a></label></p>

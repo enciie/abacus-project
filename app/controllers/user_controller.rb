@@ -5,7 +5,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   get '/signup' do #loads signup page
     if logged_in?
-      redirect to "/users/home"
+      redirect to "/home"
     else
       erb :'/users/create_user'
     end
@@ -18,13 +18,13 @@ class UserController < ApplicationController #inherits from ApplicationControlle
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect to "/users/home"
+      redirect to "/home"
     end
   end
 
   get '/login' do
     if logged_in?
-      redirect to "/users/home"
+      redirect to "/home"
     else
       erb :'/users/login'
     end
@@ -34,7 +34,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
     @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect to "/users/home"
+      redirect to "/home"
     else
       redirect to '/signup'
     end
@@ -45,11 +45,11 @@ class UserController < ApplicationController #inherits from ApplicationControlle
       session.clear
       redirect to '/'
     else
-      redirect to "/users/home"
+      redirect to "/home"
     end
   end
 
-  get '/users/home' do
+  get '/home' do
     erb :'users/homepage'
   end
 
