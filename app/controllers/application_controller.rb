@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/signup" do
-    erb :"/users/new"
+    erb :"/users/create_user"
   end
 
   post "/signup" do # create a new user
@@ -29,7 +29,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/login" do
-    erb :"/users/index"
+    erb :"/users/login"
   end
 
   post "/login" do
@@ -40,6 +40,20 @@ class ApplicationController < Sinatra::Base
     else
       redirect to '/signup'
     end
+  end
+
+  helpers do
+
+    def logged_in?
+      !!session[:user_id]
+    end
+
+    def current_user
+      if logged_in?
+        @user = User.find(session[:user_id])
+      end
+    end
+
   end
 
 end
