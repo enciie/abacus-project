@@ -7,10 +7,10 @@
   <input type="text" name="username" placeholder="username">
 
   <label>Email:</label>
-  <input type="text" name="email" placeholder="email">
+  <input type="text" name="email" placeholder="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
 
   <label>Password:</label>
-  <input type="password" name="password" placeholder="password">
+  <input type="password" name="password" placeholder="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 
   <br></br>
 

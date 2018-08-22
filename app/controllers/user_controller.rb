@@ -16,9 +16,13 @@ class UserController < ApplicationController #inherits from ApplicationControlle
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-      @user.save
-      session[:user_id] = @user.id
-      redirect to "/home"
+      if @user.save
+        session[:user_id] = @user.id
+        redirect to "/home"
+      else
+        # flash[:message] = @user.errors.full_messages.join(", ")
+        redirect to '/signup'
+      end
     end
   end
 
