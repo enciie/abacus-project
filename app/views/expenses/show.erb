@@ -1,5 +1,8 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 <h2>EXPENSE: <%=@expense.name%></h2>
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
 
 <h3>Price: $<%=@expense.price.to_f %></h3>
 <br></br>

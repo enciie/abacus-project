@@ -1,7 +1,9 @@
 require './config/environment'
+require 'rack-flash'
 require 'pry'
 
 class GroupController < ApplicationController #inherits from ApplicationController
+    use Rack::Flash
 
   get '/groups' do #lists all groups
     if logged_in?
@@ -23,12 +25,13 @@ class GroupController < ApplicationController #inherits from ApplicationControll
 
   post '/groups' do #create group
     if params[:group][:name] == ""
+      flash[:message] = "flash test 1"
       redirect to '/groups/new'
     else
-      binding.pry
       user = User.find_by_id(session[:user_id])
       @group = Group.create(:name => params[:group][:name], :user_id => user.id)
       session[:group_id] = @group.id
+      flash[:message] = "Successfully created a new group"
       binding.pry
       redirect to "/groups/#{@group.id}"
     end

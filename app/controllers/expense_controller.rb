@@ -1,7 +1,10 @@
 require './config/environment'
+require 'sinatra/base'
+require 'rack-flash'
 require 'pry'
 
 class ExpenseController < ApplicationController #inherits from ApplicationController
+    use Rack::Flash
 
   get '/expenses/new' do #displays create expense form
     if logged_in?
@@ -15,11 +18,13 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   post '/expenses' do #creates one expense
     if params[:expenses][:name] == "" || params[:expenses][:price] == ""
+      flash[:message] = "Please enter valid input"
       redirect to '/expenses/new'
     else
       group = Group.find_by_id(session[:group_id])
       user = User.find_by_id(session[:user_id])
       @expense = Expense.create(:name => params[:expenses][:name], :price => params[:expenses][:price], :user_id => user.id, :group_id => group.id)
+      flash[:message] = "Sucessfully created a new expense"
       redirect to "/expenses/#{@expense.id}"
     end
   end

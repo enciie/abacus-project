@@ -1,7 +1,10 @@
 require './config/environment'
+require 'sinatra/base'
+require 'rack-flash'
 require 'pry'
 
 class UserController < ApplicationController #inherits from ApplicationController
+  use Rack::Flash
 
   get '/signup' do #loads signup page
     if logged_in?
@@ -13,11 +16,13 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   post '/signup' do # create a new user
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
+      flash[:message] = "flash test 1"
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       if @user.save
         session[:user_id] = @user.id
+        flash[:message] = "success"
         redirect to "/home"
       else
         # flash[:message] = @user.errors.full_messages.join(", ")
