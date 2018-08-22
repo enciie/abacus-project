@@ -14,7 +14,7 @@
         <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
     <% end %>
   <% end %>
-
+<br>
 <h3>Total</h3>
   <% @total = []%>
   <%@group.expenses.each do |expense|%>

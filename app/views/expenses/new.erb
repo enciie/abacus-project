@@ -1,7 +1,7 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 
 <h2>Add New Expense to <a href='/groups/<%=current_group.id%>'><%=current_group.name%></a></h2>
-<br></br>
+<br>
 
 <% if flash.has?(:message) %>
   <%= flash[:message] %>
@@ -18,11 +18,11 @@
 </form>
 
 <br></br>
-  <%if @group.expenses != nil%>
-  <h3>Current Expenses:</h3>
-    <%@group.expenses.each do |expense|%>
-    <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
-    <% end %>
-  <% else %>
+<h3>Current Expenses:</h3>
+  <%if @group.expenses.empty?%>
     <p>There are no expenses at this time</p>
+  <% else %>
+    <%@group.expenses.each do |expense|%>
+      <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
+    <% end %>
   <% end %>

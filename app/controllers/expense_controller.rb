@@ -21,6 +21,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
       flash[:message] = "Please enter valid input"
       redirect to '/expenses/new'
     else
+      binding.pry
       group = Group.find_by_id(session[:group_id])
       user = User.find_by_id(session[:user_id])
       @expense = Expense.create(:name => params[:expenses][:name], :price => params[:expenses][:price], :user_id => user.id, :group_id => group.id)
