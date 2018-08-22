@@ -34,4 +34,51 @@ class GroupController < ApplicationController #inherits from ApplicationControll
     end
   end
 
+  get '/groups/:id' do #groups show page
+    if logged_in?
+      @group = Group.find_by_id(params[:id])
+      session[:group_id] = @group.id
+      erb :'groups/show'
+    else
+      redirect to '/login'
+    end
+  end
+
+  get '/groups/:id/edit' do #load group edit form
+    if logged_in?
+      @group = Group.find_by_id(params[:id])
+      if @group.user_id == session[:user_id]
+        erb :'groups/edit'
+      else
+        redirect to '/groups'
+      end
+    else
+      redirect to '/login'
+    end
+  end
+
+  post '/groups/:id' do #edit action
+    if params["group"]["name"] == ""
+      redirect to "/groups/#{params[:id]}/edit"
+    else
+      @group = Group.find_by_id(params[:id])
+      # @group.name = params[:group][:name]
+      @group.update(params[:group])
+      # @group.save
+      redirect to "/groups/#{@group.id}"
+    end
+  end
+
+  delete '/groups/:id/delete' do
+    if logged_in?
+      @group = Group.find_by_id(params[:id])
+      if @group && @group.user == current_user
+        @group.delete
+      end
+        redirect to '/groups'
+    else
+      redirect to '/login'
+    end
+  end
+
 end

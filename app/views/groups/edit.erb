@@ -1,0 +1,10 @@
+<p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+<h1>Edit Group <%=@group.name%></h1>
+
+<form action="/groups/<%= @group.id %>" method="post">
+  <input type="hidden" id="hidden" name="_method" value="PATCH">
+  <label>Group Name:</label>
+  <input type="text" id="group_name" name="group[name]" value="<%= @group.name %>">
+  <br></br>
+  <input type="submit" value="Update Group Name">
+</form>
