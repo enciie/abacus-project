@@ -9,40 +9,11 @@ class ApplicationController < Sinatra::Base
     set :sessions_secret, "abacus-secret"
   end
 
-  get "/" do
+  get '/' do
     if logged_in?
       redirect to '/users/:slug'
     else
       erb :index
-    end
-  end
-
-  get "/signup" do
-    erb :"/users/create_user"
-  end
-
-  post "/signup" do # create a new user
-    if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      redirect to '/signup'
-    else
-      @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-      @user.save
-      session[:user_id] = @user.id
-      redirect to '/groups'
-    end
-  end
-
-  get "/login" do
-    erb :"/users/login"
-  end
-
-  post "/login" do
-    @user = User.find_by(:username => params[:username])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect to "/users/#{@user.slug}"
-    else
-      redirect to '/signup'
     end
   end
 
@@ -51,13 +22,8 @@ class ApplicationController < Sinatra::Base
       sessions.clear
       redirect to '/'
     else
-      redirect to '/groups'
+      redirect to "/users/#{@user.slug}"
     end
-  end
-
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    erb :'users/homepage'
   end
 
   helpers do
