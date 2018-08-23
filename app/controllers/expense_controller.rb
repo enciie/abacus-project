@@ -19,14 +19,12 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
   end
 
   post '/expenses' do #creates one expense
-    binding.pry
     if params[:expense][:name] == "" || params[:expense][:price] == ""
       flash[:message] = "Please make sure all fields are filled in."
       redirect to '/expenses/new'
     else
       group = Group.find_by_id(session[:group_id])
       user = User.find_by_id(session[:user_id])
-      binding.pry
       @expense = Expense.create(:name => params[:expense][:name], :price => params[:expense][:price], :user_id => user.id, :group_id => group.id)
       flash[:message] = "Sucessfully created a new expense"
       redirect to "/expenses/#{@expense.id}"
@@ -35,8 +33,14 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   get '/expenses/:id' do #expense show page
     if logged_in?
-      @expense = Expense.find_by_id(params[:id])
-      erb :'/expenses/show'
+      group = Group.find_by_id(params[:id])
+      if current_user == group.user
+        @expense = Expense.find_by_id(params[:id])
+        erb :'/expenses/show'
+      else
+        flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
+        redirect to '/groups'
+      end
     else
       redirect to '/login'
     end
@@ -48,6 +52,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
       if @expense.user_id == session[:user_id]
         erb :'/expenses/edit'
       else
+        flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
         redirect to '/groups'
       end
     else

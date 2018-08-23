@@ -61,6 +61,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
       if @group.user_id == session[:user_id]
         erb :'groups/edit'
       else
+        flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
         redirect to '/groups'
       end
     else
