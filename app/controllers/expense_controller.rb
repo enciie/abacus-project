@@ -80,6 +80,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
       if @expense && @expense.user == current_user
         @expense.delete
       end
+        flash[:message] = "You cannot delete expenses that are not in your groups"
         redirect to "/groups/#{current_group.id}"
     else
       redirect to '/login'
