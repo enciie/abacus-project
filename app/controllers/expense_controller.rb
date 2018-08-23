@@ -1,10 +1,13 @@
 require './config/environment'
-require 'sinatra/base'
-require 'rack-flash'
+# require 'sinatra/base'
+# require 'rack-flash'
 require 'pry'
+require 'sinatra/base'
+require 'sinatra/flash'
+
 
 class ExpenseController < ApplicationController #inherits from ApplicationController
-    use Rack::Flash
+
 
   get '/expenses/new' do #displays create expense form
     if logged_in?
@@ -41,7 +44,8 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   patch '/expenses/:id' do
     @expense = Expense.find(params[:id])
-    @expense.update(params[:expense])
+    binding.pry
+    @expense.update(params[:expense]) unless params
     @expense.save
     redirect to "/expenses/#{@expense.id}"
   end

@@ -1,5 +1,6 @@
 <h2>Sign Up for Abacus</h2>
-<% if flash.has?(:message) %>
+
+<% if !!flash[:message] %>
   <%= flash[:message] %>
 <% end %>
 

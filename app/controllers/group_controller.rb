@@ -1,10 +1,13 @@
 require './config/environment'
-require 'sinatra/base'
-require 'rack-flash'
+# require 'sinatra/base'
+# require 'rack-flash'
 require 'pry'
+require 'sinatra/base'
+require 'sinatra/flash'
+
 
 class GroupController < ApplicationController #inherits from ApplicationController
-    use Rack::Flash
+
 
   get '/groups' do #lists all groups
     if logged_in?

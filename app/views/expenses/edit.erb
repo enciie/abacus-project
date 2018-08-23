@@ -3,6 +3,10 @@
 <h2>Edit Expense: <%= @expense.name %></h2>
 <br></br>
 
+<% if !!flash[:message] %>
+  <%= flash[:message] %>
+<% end %>
+
 <h3>Group: <%=current_group.name%></h3><br>
 
 <form action="/expenses/<%= @expense.id%>" method="POST">

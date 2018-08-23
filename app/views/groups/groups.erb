@@ -1,6 +1,9 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 <h2>Group List</h2>
 <br>
+<% if !!flash[:message] %>
+  <%= flash[:message] %>
+<% end %>
 
 <h3>Here are your groups (<%=@user.groups.size%>):</h3>
 <%if @user.groups.empty?%>

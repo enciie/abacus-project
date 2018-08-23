@@ -3,7 +3,7 @@
 <h2>Add New Expense to <a href='/groups/<%=current_group.id%>'><%=current_group.name%></a></h2>
 <br>
 
-<% if flash.has?(:message) %>
+<% if !!flash[:message] %>
   <%= flash[:message] %>
 <% end %>
 <br>
@@ -12,7 +12,7 @@
   <input type="text" id="new_expense" name="expenses[name]" placeholder="Description">
 
   <label>Price: $</label>
-  <input type="text" name="expenses[price]" pattern="\d+.?\d*" placeholder="0.00">
+  <input type="text" name="expenses[price]" pattern="\d+(\.\d{2})?" placeholder="0.00">
 
   <input class="submit" type="submit" value="submit">
 </form>

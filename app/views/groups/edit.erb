@@ -2,7 +2,7 @@
 
 <h2>Edit Group <%=@group.name%></h2><br></br>
 
-<% if flash.has?(:message) %>
+<% if !!flash[:message] %>
   <%= flash[:message] %>
 <% end %>
 
