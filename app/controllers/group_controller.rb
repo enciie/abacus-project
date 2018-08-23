@@ -42,7 +42,6 @@ class GroupController < ApplicationController #inherits from ApplicationControll
 
   get '/groups/:id' do #groups show page
     if logged_in?
-      binding.pry
       @group = Group.find_by_id(params[:id])
       if current_user == @group.user
         session[:group_id] = @group.id
@@ -90,6 +89,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
         @group.expenses.destroy_all
         @group.delete
       end
+        flash[:message] = "Successfully deleted group"
         redirect to '/groups'
     else
       redirect to '/login'

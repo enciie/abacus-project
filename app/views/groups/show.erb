@@ -1,12 +1,11 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
 
-<% if !!flash[:message] %>
-  <%= flash[:message] %>
-<% end %>
-
   <h2>Group: <%= @group.name %> </h2>
 
-
+  <% if !!flash[:message] %>
+    <%= flash[:message] %>
+  <% end %>
+  <br>
   <h3>Expenses(<%=@group.expenses.count%>):</h3>
     <%if @group.expenses.empty?%>
       <p>Currently no expenses for this group</p>

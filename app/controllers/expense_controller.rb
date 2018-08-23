@@ -77,9 +77,9 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
       if @expense && @expense.user == current_user
-        binding.pry
         @expense.delete
       end
+      flash[:message] = "Successfully deleted expense"
         redirect to "/groups/#{current_group.id}"
     else
       redirect to '/login'
