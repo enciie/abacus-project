@@ -1,10 +1,10 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
-
-<h2>Group: <%= @group.name %> </h2>
-
 <% if !!flash[:message] %>
   <%= flash[:message] %>
 <% end %>
+<%if current_user == current_group.user%>
+<h2>Group: <%= @group.name %> </h2>
+
 
 <h3>Expenses(<%=@group.expenses.count%>):</h3>
   <%if @group.expenses.empty?%>
@@ -33,5 +33,9 @@
     <input type="submit" value="Delete Group">
   </form>
   <br>
+
+  <%else%>
+    <h3>You cannot view this group</h3>
+  <%end%>
 
   <p><label><a href="/logout">Log Out</a></label></p><br>
