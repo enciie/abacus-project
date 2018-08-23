@@ -42,12 +42,13 @@ class GroupController < ApplicationController #inherits from ApplicationControll
 
   get '/groups/:id' do #groups show page
     if logged_in?
-      if current_user == current_group.user
-        @group = Group.find_by_id(params[:id])
+      binding.pry
+      @group = Group.find_by_id(params[:id])
+      if current_user == @group.user
         session[:group_id] = @group.id
         erb :'groups/show'
       else
-        flash[:message] = "You cannot view or edit any group that is not in your list"
+        flash[:message] = "This group no longer exists or it's not part of your list"
         redirect to '/groups'
       end
     else
@@ -61,7 +62,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
       if @group.user_id == session[:user_id]
         erb :'groups/edit'
       else
-        flash[:message] = "You cannot view or edit any groups that are not part of your list"
+        flash[:message] = "This group no longer exists or it's not part of your list"
         redirect to '/groups'
       end
     else
@@ -89,7 +90,6 @@ class GroupController < ApplicationController #inherits from ApplicationControll
         @group.expenses.destroy_all
         @group.delete
       end
-        flash[:message] = "You cannot delete groups that are not in your list"
         redirect to '/groups'
     else
       redirect to '/login'

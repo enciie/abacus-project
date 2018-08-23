@@ -34,10 +34,10 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
   get '/expenses/:id' do #expense show page
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
-      if current_user.id == @expense.user_id
+      if @expense && current_user == @expense.user
         erb :'/expenses/show'
       else
-        flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
+        flash[:message] = "This expense no longer exists or it's not part of your groups"
         redirect to '/groups'
       end
     else
@@ -51,7 +51,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
       if @expense.user_id == session[:user_id]
         erb :'/expenses/edit'
       else
-        flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
+        flash[:message] = "This expense no longer exists or it's not part of your groups"
         redirect to '/groups'
       end
     else
@@ -77,9 +77,9 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
       if @expense && @expense.user == current_user
+        binding.pry
         @expense.delete
       end
-        flash[:message] = "You cannot delete expenses that are not in your groups"
         redirect to "/groups/#{current_group.id}"
     else
       redirect to '/login'
