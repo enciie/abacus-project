@@ -16,14 +16,16 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   post '/signup' do # create a new user
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      flash[:message] = "Please make sure all fields are filled in"
+      flash[:message] = "Username, Email OR Password cannot be blank!"
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       if @user.save
+        flash[:message] = "Successfully created an account!"
         session[:user_id] = @user.id
         redirect to "/home"
       else
+        flash[:message] = "Please try another username or email"
         redirect to '/signup'
       end
     end

@@ -9,8 +9,9 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "abacus-secret"
-    use Rack::Flash
   end
+
+    use Rack::Flash
 
   get '/' do
     erb :index
