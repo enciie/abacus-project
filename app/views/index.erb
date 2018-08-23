@@ -1,6 +1,11 @@
 <h1>Welcome to Abacus</h1>
 <p>Tool to help you keep track of all your expenses</p>
 
+<br></br>
+<% if !!flash[:message] %>
+  <%= flash[:message] %>
+<% end %>
+<br></br>
 
 <a href="/signup">Sign Up</a> <br>
 <a href="/login">Log In</a>

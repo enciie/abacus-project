@@ -55,6 +55,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
   get '/logout' do
     if logged_in?
       session.clear
+      flash[:message] = "You have sucessfully signed out."
       redirect to '/'
     else
       redirect to "/home"
@@ -62,7 +63,11 @@ class UserController < ApplicationController #inherits from ApplicationControlle
   end
 
   get '/home' do
-    erb :'users/homepage'
+    if logged_in?
+      erb :'users/homepage'
+    else
+      redirect to '/'
+    end
   end
 
 end
