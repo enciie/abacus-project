@@ -26,6 +26,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     else
       group = Group.find_by_id(session[:group_id])
       user = User.find_by_id(session[:user_id])
+      binding.pry
       @expense = Expense.create(:name => params[:expense][:name], :price => params[:expense][:price], :user_id => user.id, :group_id => group.id)
       flash[:message] = "Sucessfully created a new expense"
       redirect to "/expenses/#{@expense.id}"

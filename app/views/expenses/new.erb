@@ -9,10 +9,10 @@
 <br>
 <form action="/expenses" method="post">
   <label>Expense Name:</label>
-  <input type="text" id="new_expense" name="expenses[name]" placeholder="Description">
+  <input type="text" id="new_expense" name="expense[name]" placeholder="Description">
 
   <label>Price: $</label>
-  <input type="text" name="expenses[price]" pattern="\d+(\.\d{2})?" placeholder="0.00">
+  <input type="text" name="expense[price]" pattern="\d+(\.\d{2})?" placeholder="0.00">
 
   <input class="submit" type="submit" value="submit">
 </form>
