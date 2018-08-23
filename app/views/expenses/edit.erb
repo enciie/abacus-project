@@ -16,7 +16,7 @@
   <input type="text" name="expense[name]" id="expense_name" value="<%= @expense.name %>"><br></br>
 
   <label for="artist_name">Update Expense Price:</label>
-  <input type="text" name="expense[price]" value="<%= @expense.price%>" pattern="\d+.?\d*" id="expense_price"><br></br>
+  <input type="text" name="expense[price]" value="<%= @expense.price%>" pattern="\d+(\.\d{2})?" id="expense_price"><br></br>
 
   <br>
 
