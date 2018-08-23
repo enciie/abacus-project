@@ -80,6 +80,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
     if logged_in?
       @group = Group.find_by_id(params[:id])
       if @group && @group.user == current_user
+        @group.expenses.destroy_all
         @group.delete
       end
         redirect to '/groups'
