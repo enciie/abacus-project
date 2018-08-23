@@ -42,9 +42,14 @@ class GroupController < ApplicationController #inherits from ApplicationControll
 
   get '/groups/:id' do #groups show page
     if logged_in?
-      @group = Group.find_by_id(params[:id])
-      session[:group_id] = @group.id
-      erb :'groups/show'
+      if current_user == current_group.user
+        @group = Group.find_by_id(params[:id])
+        session[:group_id] = @group.id
+        erb :'groups/show'
+      else
+        flash[:message] = "You cannot view or edit any group that is not in your list"
+        redirect to '/groups'
+      end
     else
       redirect to '/login'
     end

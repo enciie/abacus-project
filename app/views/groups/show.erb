@@ -1,41 +1,38 @@
 <p>Logged in as : <a href ="/home"><%= current_user.username %></a></p>
+
 <% if !!flash[:message] %>
   <%= flash[:message] %>
 <% end %>
-<%if current_user == current_group.user%>
-<h2>Group: <%= @group.name %> </h2>
+
+  <h2>Group: <%= @group.name %> </h2>
 
 
-<h3>Expenses(<%=@group.expenses.count%>):</h3>
-  <%if @group.expenses.empty?%>
-    <p>Currently no expenses for this group</p>
-  <%else %>
-    <%@group.expenses.each do |expense|%>
-        <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
+  <h3>Expenses(<%=@group.expenses.count%>):</h3>
+    <%if @group.expenses.empty?%>
+      <p>Currently no expenses for this group</p>
+    <%else %>
+      <%@group.expenses.each do |expense|%>
+          <li><a href="/expenses/<%=expense.id%>"><%=expense.name%></a>: $<%=('%.2f' % (expense.price)) %></a></li>
+      <% end %>
     <% end %>
-  <% end %>
-<br>
-<h3>Total</h3>
-  <% @total = []%>
-  <%@group.expenses.each do |expense|%>
-  <% @total << expense.price.to_f%>
-  <%end%>
-  <p>$<%=('%.2f' % (@total.sum))%></p>
-
-  <br></br>
-  <a href="/expenses/new">Add New Expense</a>
-  <br></br>
-  <a href="/groups/<%=@group.id%>/edit">Edit Group Name</a>
-  <br></br>
-
-  <form method="post" action="/groups/<%=@group.id%>/delete">
-    <input id="hidden" type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete Group">
-  </form>
   <br>
+  <h3>Total</h3>
+    <% @total = []%>
+    <%@group.expenses.each do |expense|%>
+    <% @total << expense.price.to_f%>
+    <%end%>
+    <p>$<%=('%.2f' % (@total.sum))%></p>
 
-  <%else%>
-    <h3>You cannot view this group</h3>
-  <%end%>
+    <br></br>
+    <a href="/expenses/new">Add New Expense</a>
+    <br></br>
+    <a href="/groups/<%=@group.id%>/edit">Edit Group Name</a>
+    <br></br>
 
-  <p><label><a href="/logout">Log Out</a></label></p><br>
+    <form method="post" action="/groups/<%=@group.id%>/delete">
+      <input id="hidden" type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete Group">
+    </form>
+    <br>
+
+<p><label><a href="/logout">Log Out</a></label></p><br>
