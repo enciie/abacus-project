@@ -19,13 +19,13 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
   end
 
   post '/expenses' do #creates one expense
-    if params[:expenses][:name] == "" || params[:expenses][:price] == ""
+    if params[:expense][:name] == "" || params[:expense][:price] == ""
       flash[:message] = "Please make sure all fields are filled in."
       redirect to '/expenses/new'
     else
       group = Group.find_by_id(session[:group_id])
       user = User.find_by_id(session[:user_id])
-      @expense = Expense.create(:name => params[:expenses][:name], :price => params[:expenses][:price], :user_id => user.id, :group_id => group.id)
+      @expense = Expense.create(:name => params[:expense][:name], :price => params[:expense][:price], :user_id => user.id, :group_id => group.id)
       flash[:message] = "Sucessfully created a new expense"
       redirect to "/expenses/#{@expense.id}"
     end
@@ -42,7 +42,6 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   get '/expenses/:id/edit' do #load expense edit form
     if logged_in?
-      binding.pry
       @expense = Expense.find_by_id(params[:id])
       if @expense.user_id == session[:user_id]
         erb :'/expenses/edit'
@@ -54,11 +53,18 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
     end
   end
 
-  patch '/expenses/:id' do
-    @expense = Expense.find(params[:id])
-    @expense.update(params[:expense])
-    @expense.save
-    redirect to "/expenses/#{@expense.id}"
+  patch '/expenses/:id' do #expense edit action
+    if params[:expense][:name] == "" || params[:expense][:price] == ""
+      flash[:message] = "All fields must be filled in."
+      redirect to "/expenses/#{params[:id]}/edit"
+    else
+      @expense = Expense.find(params[:id])
+      @expense.name = params[:expense][:name] unless @expense.name == params[:expense][:name]
+      @expense.price = params[:expense][:price] unless @expense.price == params[:expense][:price]
+      @expense.save
+      flash[:message] = "Successfully updated"
+      redirect to "/expenses/#{@expense.id}"
+    end
   end
 
   delete '/expenses/:id/delete' do
