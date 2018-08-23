@@ -33,9 +33,8 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
 
   get '/expenses/:id' do #expense show page
     if logged_in?
-      group = Group.find_by_id(params[:id])
-      if current_user == group.user
-        @expense = Expense.find_by_id(params[:id])
+      @expense = Expense.find_by_id(params[:id])
+      if current_user.id == @expense.user_id
         erb :'/expenses/show'
       else
         flash[:message] = "You cannot view or edit any expenses that are not part of your groups"
