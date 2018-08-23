@@ -43,7 +43,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
   get '/groups/:id' do #groups show page
     if logged_in?
       @group = Group.find_by_id(params[:id])
-      if current_user == @group.user
+      if @group.user == current_user
         session[:group_id] = @group.id
         erb :'groups/show'
       else

@@ -44,10 +44,16 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   post '/login' do
     @user = User.find_by(:username => params[:username])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect to "/home"
+    if @user
+      if @user.authenticate(params[:password])
+        session[:user_id] = @user.id
+        redirect to "/home"
+      else
+        flash[:message] = "Incorrect password, please try again"
+        redirect to '/login'
+      end
     else
+      flash[:message] = "Account does not exist, please create a new account"
       redirect to '/signup'
     end
   end
