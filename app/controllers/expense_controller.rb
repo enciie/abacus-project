@@ -19,6 +19,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
   end
 
   post '/expenses' do #creates one expense
+    binding.pry
     if params[:expense][:name] == "" || params[:expense][:price] == ""
       flash[:message] = "Please make sure all fields are filled in."
       redirect to '/expenses/new'
