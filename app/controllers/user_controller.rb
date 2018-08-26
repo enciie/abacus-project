@@ -23,7 +23,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
       redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-      if @user.save
+      if @user.save #validates_uniqueness_of :username, :email
         flash[:message] = "Successfully created an account!"
         session[:user_id] = @user.id
         redirect to "/home"
@@ -36,6 +36,7 @@ class UserController < ApplicationController #inherits from ApplicationControlle
 
   get '/login' do
     if logged_in?
+      flash[:message] = "You are already logged in"
       redirect to "/home"
     else
       erb :'/users/login'
