@@ -65,10 +65,8 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
       redirect to "/expenses/#{params[:id]}/edit"
     else
       @expense = Expense.find(params[:id])
-      @expense.name = params[:expense][:name] unless @expense.name == params[:expense][:name]
-      @expense.price = params[:expense][:price] unless @expense.price == params[:expense][:price]
-      @expense.save
-      flash[:message] = "Successfully updated"
+      @expense.update_attributes(params[:expense])
+      flash[:message] = "Successfully updated expense"
       redirect to "/expenses/#{@expense.id}"
     end
   end

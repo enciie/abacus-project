@@ -75,8 +75,9 @@ class GroupController < ApplicationController #inherits from ApplicationControll
       redirect to "/groups/#{params[:id]}/edit"
     else
       @group = Group.find_by_id(params[:id])
+      @group.update_attributes(params[:group])
       # @group.name = params[:group][:name]
-      @group.update(params[:group]) unless @group.name == params[:group][:name]
+      # @group.update(params[:group]) unless @group.name == params[:group][:name]
       # @group.save
       redirect to "/groups/#{@group.id}"
     end
