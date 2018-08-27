@@ -48,7 +48,7 @@ class ExpenseController < ApplicationController #inherits from ApplicationContro
   get '/expenses/:id/edit' do #load expense edit form
     if logged_in?
       @expense = Expense.find_by_id(params[:id])
-      if @expense.user_id == session[:user_id]
+      if @expense && @expense.user == current_user
         erb :'/expenses/edit'
       else
         flash[:message] = "This expense no longer exists or it's not part of your groups"

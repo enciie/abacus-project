@@ -41,7 +41,7 @@ class GroupController < ApplicationController #inherits from ApplicationControll
   end
 
   get '/groups/:id' do #groups show page
-    if logged_in?
+    if logged_in? # redirect_if_not_logged_in
       @group = Group.find_by_id(params[:id])
       if @group.user == current_user
         session[:group_id] = @group.id
@@ -58,10 +58,10 @@ class GroupController < ApplicationController #inherits from ApplicationControll
   get '/groups/:id/edit' do #load group edit form
     if logged_in?
       @group = Group.find_by_id(params[:id])
-      if @group.user_id == session[:user_id]
+      if @group.user == current_user
         erb :'groups/edit'
       else
-        flash[:message] = "This group no longer exists or it's not part of your list"
+        flash[:message] = "The group no longer exists or it's not part of your list"
         redirect to '/groups'
       end
     else
@@ -75,10 +75,9 @@ class GroupController < ApplicationController #inherits from ApplicationControll
       redirect to "/groups/#{params[:id]}/edit"
     else
       @group = Group.find_by_id(params[:id])
-      @group.update_attributes(params[:group])
-      # @group.name = params[:group][:name]
-      # @group.update(params[:group]) unless @group.name == params[:group][:name]
-      # @group.save
+      if @group && @group.user == current_user
+        @group.update_attributes(params[:group])
+      end
       redirect to "/groups/#{@group.id}"
     end
   end
